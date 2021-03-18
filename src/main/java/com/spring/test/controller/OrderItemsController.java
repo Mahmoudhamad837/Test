@@ -1,0 +1,45 @@
+package com.spring.test.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.spring.test.entity.OrderItems;
+import com.spring.test.service.OrderItemsService;
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
+@RestController
+public class OrderItemsController {
+
+	@Autowired
+	private OrderItemsService orderItemsService;
+	
+	@GetMapping("/orderitems")
+	public List<OrderItems> getAllOrderProducts(){
+		return orderItemsService.getAllOrderItems();
+	}
+	
+	@GetMapping("/orderitems/{id}")
+	public OrderItems getOrderProductsById(@PathVariable("id")int id) {
+		return orderItemsService.getOrderItemsById(id);
+	}
+	
+	@PostMapping("/orderitems")
+	public OrderItems saveOrderProducts(@RequestBody OrderItems orderProducts) {
+		return orderItemsService.save(orderProducts);
+	}
+	
+	@DeleteMapping("/orderitems/{id}")
+	public OrderItems deleteById(@PathVariable("id") int id) {
+		return orderItemsService.deleteById(id);
+	}
+}
